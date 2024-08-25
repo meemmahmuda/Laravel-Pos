@@ -38,6 +38,14 @@
             <label for="total_price">Total Price</label>
             <input type="number" id="total_price" class="form-control" readonly>
         </div>
+        <div class="form-group">
+            <label for="amount_given">Amount Given</label>
+            <input type="number" id="amount_given" name="amount_given" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="change_returned">Change Returned</label>
+            <input type="number" id="change_returned" class="form-control" readonly>
+        </div>
         <button type="submit" class="btn btn-primary">Create Purchase</button>
     </form>
 </div>
@@ -56,6 +64,7 @@
     });
 
     document.getElementById('quantity').addEventListener('input', calculateTotalPrice);
+    document.getElementById('amount_given').addEventListener('input', calculateChangeReturned);
 
     function calculateTotalPrice() {
         const quantity = document.getElementById('quantity').value;
@@ -63,6 +72,14 @@
         const totalPrice = quantity * price;
 
         document.getElementById('total_price').value = totalPrice;
+    }
+
+    function calculateChangeReturned() {
+        const totalPrice = document.getElementById('total_price').value;
+        const amountGiven = document.getElementById('amount_given').value;
+        const changeReturned = amountGiven - totalPrice;
+
+        document.getElementById('change_returned').value = changeReturned >= 0 ? changeReturned : 0;
     }
 </script>
 @endsection

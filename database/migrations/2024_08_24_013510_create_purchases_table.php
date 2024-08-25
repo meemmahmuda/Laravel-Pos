@@ -13,6 +13,8 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('order_id');
             $table->integer('quantity');
             $table->integer('total_price');
+            $table->integer('amount_given')->nullable();
+            $table->integer('change_returned')->nullable();
             $table->timestamps();
 
             // Foreign key to orders table
@@ -22,6 +24,9 @@ class CreatePurchasesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::table('purchases', function (Blueprint $table) {
+            $table->dropColumn('amount_given');
+            $table->dropColumn('change_returned');
+        });
     }
 }

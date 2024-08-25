@@ -11,8 +11,10 @@
         <div class="form-group">
             <label for="order_id">Order</label>
             <select id="order_id" name="order_id" class="form-control">
+                <option value="">Select Order</option>
                 @foreach($orders as $order)
-                    <option value="{{ $order->id }}" {{ $purchase->order_id == $order->id ? 'selected' : '' }} data-product="{{ $order->product->name }}" data-supplier="{{ $order->supplier->name }}" data-price="{{ $order->purchase_price }}">
+                    <option value="{{ $order->id }}" data-product="{{ $order->product->name }}" data-supplier="{{ $order->supplier->name }}" data-price="{{ $order->purchase_price }}"
+                        {{ $order->id == $purchase->order_id ? 'selected' : '' }}>
                         {{ 'Order No ' . $order->id }}
                     </option>
                 @endforeach
@@ -20,15 +22,15 @@
         </div>
         <div class="form-group">
             <label for="product_name">Product</label>
-            <input type="text" id="product_name" class="form-control" readonly>
+            <input type="text" id="product_name" class="form-control" value="{{ $purchase->order->product->name }}" readonly>
         </div>
         <div class="form-group">
             <label for="supplier_name">Supplier</label>
-            <input type="text" id="supplier_name" class="form-control" readonly>
+            <input type="text" id="supplier_name" class="form-control" value="{{ $purchase->order->supplier->name }}" readonly>
         </div>
         <div class="form-group">
             <label for="purchase_price">Purchase Price</label>
-            <input type="number" id="purchase_price" class="form-control" readonly>
+            <input type="number" id="purchase_price" class="form-control" value="{{ $purchase->order->purchase_price }}" readonly>
         </div>
         <div class="form-group">
             <label for="quantity">Quantity</label>
@@ -37,6 +39,14 @@
         <div class="form-group">
             <label for="total_price">Total Price</label>
             <input type="number" id="total_price" class="form-control" value="{{ $purchase->total_price }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="amount_given">Amount Given</label>
+            <input type="number" id="amount_given" name="amount_given" class="form-control" value="{{ $purchase->amount_given }}" required>
+        </div>
+        <div class="form-group">
+            <label for="change_returned">Change Returned</label>
+            <input type="number" id="change_returned" class="form-control" value="{{ $purchase->change_returned }}" readonly>
         </div>
         <button type="submit" class="btn btn-primary">Update Purchase</button>
     </form>
@@ -56,6 +66,7 @@
     });
 
     document.getElementById('quantity').addEventListener('input', calculateTotalPrice);
+    document.getElementById('amount_given').addEventListener('input', calculateChangeReturned);
 
     function calculateTotalPrice() {
         const quantity = document.getElementById('quantity').value;
@@ -65,15 +76,16 @@
         document.getElementById('total_price').value = totalPrice;
     }
 
-    // Initialize values on page load
-    document.addEventListener('DOMContentLoaded', function () {
-        const selectedOption = document.querySelector('#order_id option[selected]');
-        if (selectedOption) {
-            document.getElementById('product_name').value = selectedOption.getAttribute('data-product');
-            document.getElementById('supplier_name').value = selectedOption.getAttribute('data-supplier');
-            document.getElementById('purchase_price').value = selectedOption.getAttribute('data-price');
-            calculateTotalPrice();
-        }
-    });
+    function calculateChangeReturned() {
+        const totalPrice = document.getElementById('total_price').value;
+        const amountGiven = document.getElementById('amount_given').value;
+        const changeReturned = amountGiven - totalPrice;
+
+        document.getElementById('change_returned').value = changeReturned >= 0 ? changeReturned : 0;
+    }
+
+    // Trigger the calculations on page load in case of existing values
+    calculateTotalPrice();
+    calculateChangeReturned();
 </script>
 @endsection

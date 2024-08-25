@@ -7,6 +7,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('purchases', PurchaseController::class);
+    Route::resource('sales', SaleController::class);
     Route::get('purchases/{purchase}/invoice', [PurchaseController::class, 'printInvoice'])->name('purchases.invoice');
+    Route::get('sales/{sale}/invoice', [SaleController::class, 'printInvoice'])->name('sales.invoice');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

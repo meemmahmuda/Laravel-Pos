@@ -33,11 +33,13 @@ public function printInvoice(Purchase $purchase)
         $request->validate([
             'order_id' => 'required',
             'quantity' => 'required|integer',
+            'amount_given' => 'required|integer',
         ]);
 
         $order = Order::findOrFail($request->order_id);
 
         $totalPrice = $order->purchase_price * $request->quantity;
+        $changeReturned = $request->amount_given - $totalPrice;
 
         // Update product stock
         $product = Product::findOrFail($order->product_id);
@@ -48,6 +50,8 @@ public function printInvoice(Purchase $purchase)
             'order_id' => $order->id,
             'quantity' => $request->quantity,
             'total_price' => $totalPrice,
+            'amount_given' => $request->amount_given,
+            'change_returned' => $changeReturned,
         ]);
 
         return redirect()->route('purchases.index')->with('success', 'Purchase created successfully.');
@@ -64,11 +68,13 @@ public function printInvoice(Purchase $purchase)
         $request->validate([
             'order_id' => 'required',
             'quantity' => 'required|integer',
+            'amount_given' => 'required|integer',
         ]);
 
         $order = Order::findOrFail($request->order_id);
 
         $totalPrice = $order->purchase_price * $request->quantity;
+        $changeReturned = $request->amount_given - $totalPrice;
 
         // Update product stock
         $product = Product::findOrFail($order->product_id);
@@ -79,6 +85,8 @@ public function printInvoice(Purchase $purchase)
             'order_id' => $order->id,
             'quantity' => $request->quantity,
             'total_price' => $totalPrice,
+            'amount_given' => $request->amount_given,
+            'change_returned' => $changeReturned,
         ]);
 
         return redirect()->route('purchases.index')->with('success', 'Purchase updated successfully.');

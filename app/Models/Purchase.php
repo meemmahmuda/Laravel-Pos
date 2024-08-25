@@ -13,6 +13,8 @@ class Purchase extends Model
         'order_id',
         'quantity',
         'total_price',
+        'amount_given',  
+        'change_returned'
     ];
 
     public function order()
