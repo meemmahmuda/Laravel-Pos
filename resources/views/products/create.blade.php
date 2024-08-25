@@ -39,10 +39,10 @@
                 <label for="selling_price">Selling Price</label>
                 <input type="number" name="selling_price" id="selling_price" class="form-control" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" name="stock" id="stock" class="form-control" required>
-            </div>
+                <input type="number" name="stock" id="stock" class="form-control" >
+            </div> -->
             <button type="submit" class="btn btn-primary">Save Product</button>
         </form>
     </div>

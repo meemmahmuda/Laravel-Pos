@@ -41,7 +41,7 @@
                         <td>{{ $product->category->name ?? 'N/A' }}</td>
                         <td>{{ $product->purchase_price }}</td>
                         <td>{{ $product->selling_price }}</td>
-                        <td>{{ $product->stock }}</td>
+                        <td>{{ $product->stock ?? 'N/A' }}</td>
                         <td>
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">

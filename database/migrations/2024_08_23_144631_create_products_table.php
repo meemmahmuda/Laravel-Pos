@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
             $table->string('code')->unique();
             $table->integer('purchase_price');
             $table->integer('selling_price');
-            $table->integer('stock');
+            $table->integer('stock')->nullable(); 
             $table->timestamps();
 
             // Foreign key to the suppliers table

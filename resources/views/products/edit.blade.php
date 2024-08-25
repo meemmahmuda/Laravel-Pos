@@ -42,10 +42,10 @@
                 <label for="selling_price">Selling Price</label>
                 <input type="number" name="selling_price" id="selling_price" class="form-control" value="{{ $product->selling_price }}" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="stock">Stock</label>
                 <input type="number" name="stock" id="stock" class="form-control" value="{{ $product->stock }}" required>
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary">Update Product</button>
         </form>
     </div>

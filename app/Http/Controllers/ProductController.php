@@ -31,7 +31,7 @@ class ProductController extends Controller
             'code' => 'required|string|unique:products',
             'purchase_price' => 'required|integer',
             'selling_price' => 'required|integer',
-            'stock' => 'required|integer',
+            'stock' => 'nullable|integer',
         ]);
 
         Product::create($request->all());
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'code' => 'required|string|unique:products,code,' . $product->id,
             'purchase_price' => 'required|integer',
             'selling_price' => 'required|integer',
-            'stock' => 'required|integer',
+            'stock' => 'nullable|integer',
         ]);
 
         $product->update($request->all());
