@@ -17,13 +17,21 @@ class SaleController extends Controller
 
     public function create()
     {
-        $products = Product::all();
+        $products = Product::where('stock', '>', 0)->get();
         return view('sales.create', compact('products'));
     }
 
     public function store(Request $request)
     {
         $product = Product::find($request->product_id);
+
+        if ($product->stock <= 0) {
+            return redirect()->back()->withErrors(['product_id' => 'The selected product is out of stock.']);
+        }
+
+        if ($request->quantity > $product->stock) {
+            return redirect()->back()->withErrors(['quantity' => 'The quantity cannot be greater than the available stock.']);
+        }
     
         $sellingPrice = $product->selling_price;
         $quantity = $request->quantity;
@@ -73,6 +81,9 @@ class SaleController extends Controller
             'stock' => $product->stock - $request->quantity,
         ]);
 
+
+        
+
         // Generate an invoice (implement your own logic)
         // $this->generateInvoice($sale);
 
@@ -81,13 +92,21 @@ class SaleController extends Controller
 
     public function edit(Sale $sale)
     {
-        $products = Product::all();
+        $products = Product::where('stock', '>', 0)->get();
         return view('sales.edit', compact('sale', 'products'));
     }
 
     public function update(Request $request, Sale $sale)
     {
         $product = Product::find($request->product_id);
+
+        if ($product->stock <= 0) {
+            return redirect()->back()->withErrors(['product_id' => 'The selected product is out of stock.']);
+        }
+
+        if ($request->quantity > $product->stock) {
+            return redirect()->back()->withErrors(['quantity' => 'The quantity cannot be greater than the available stock.']);
+        }
         
         $sellingPrice = $product->selling_price;
         $quantity = $request->quantity;

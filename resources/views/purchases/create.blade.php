@@ -12,7 +12,11 @@
             <select id="order_id" name="order_id" class="form-control">
                 <option value="">Select Order</option>
                 @foreach($orders as $order)
-                    <option value="{{ $order->id }}" data-product="{{ $order->product->name }}" data-supplier="{{ $order->supplier->name }}" data-price="{{ $order->purchase_price }}">
+                    <option value="{{ $order->id }}" 
+                        data-product="{{ $order->product->name }}" 
+                        data-supplier="{{ $order->supplier->name }}" 
+                        data-price="{{ $order->purchase_price }}" 
+                        data-quantity="{{ $order->quantity }}">
                         {{ 'Order No ' . $order->id }}
                     </option>
                 @endforeach
@@ -32,7 +36,7 @@
         </div>
         <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input type="number" id="quantity" name="quantity" class="form-control" required>
+            <input type="number" id="quantity" name="quantity" class="form-control" required readonly>
         </div>
         <div class="form-group">
             <label for="total_price">Total Price</label>
@@ -56,14 +60,16 @@
         const product = selectedOption.getAttribute('data-product');
         const supplier = selectedOption.getAttribute('data-supplier');
         const price = selectedOption.getAttribute('data-price');
+        const quantity = selectedOption.getAttribute('data-quantity');
 
         document.getElementById('product_name').value = product;
         document.getElementById('supplier_name').value = supplier;
         document.getElementById('purchase_price').value = price;
+        document.getElementById('quantity').value = quantity;
+
         calculateTotalPrice();
     });
 
-    document.getElementById('quantity').addEventListener('input', calculateTotalPrice);
     document.getElementById('amount_given').addEventListener('input', calculateChangeReturned);
 
     function calculateTotalPrice() {

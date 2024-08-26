@@ -17,7 +17,7 @@
                 <th>Quantity</th>
                 <th>Discount</th>
                 <th>Total Price</th>
-                <th>Action</th>
+                <th style='width: 30%;'>Action</th>
             </tr>
         </thead>
         <tbody>

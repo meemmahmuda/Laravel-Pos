@@ -24,8 +24,13 @@
             <select id="product_id" name="product_id" class="form-control" required>
                 <option value="">Select Product</option>
                 @foreach($products as $product)
-                    <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-code="{{ $product->code }}" data-category="{{ $product->category->name }}" data-price="{{ $product->selling_price }}">
-                        {{ $product->name }}
+                    <option value="{{ $product->id }}"
+                        data-name="{{ $product->name }}"
+                        data-code="{{ $product->code }}"
+                        data-category="{{ $product->category->name }}"
+                        data-price="{{ $product->selling_price }}"
+                        data-stock="{{ $product->stock }}">
+                        {{ $product->name }} (Stock: {{ $product->stock }})
                     </option>
                 @endforeach
             </select>
@@ -45,6 +50,10 @@
         <div class="form-group">
             <label for="selling_price">Selling Price</label>
             <input type="number" id="selling_price" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="stock">Stock Available</label>
+            <input type="number" id="stock" class="form-control" readonly>
         </div>
         <div class="form-group">
             <label for="discount">Discount</label>
@@ -77,15 +86,28 @@
         const productCode = selectedOption.getAttribute('data-code');
         const category = selectedOption.getAttribute('data-category');
         const sellingPrice = parseFloat(selectedOption.getAttribute('data-price'));
+        const stock = parseInt(selectedOption.getAttribute('data-stock'));
 
         document.getElementById('product_name').value = productName;
         document.getElementById('product_code').value = productCode;
         document.getElementById('category').value = category;
         document.getElementById('selling_price').value = sellingPrice;
+        document.getElementById('stock').value = stock;
         calculateTotalPrice();
     });
 
-    document.getElementById('quantity').addEventListener('input', calculateTotalPrice);
+    document.getElementById('quantity').addEventListener('input', function () {
+        const stock = parseInt(document.getElementById('stock').value) || 0;
+        const quantity = parseInt(this.value) || 0;
+
+        if (quantity > stock) {
+            alert('The quantity cannot be greater than the available stock.');
+            this.value = stock; // Set the quantity to the maximum stock available
+        }
+
+        calculateTotalPrice();
+    });
+
     document.getElementById('discount').addEventListener('input', calculateTotalPrice);
     document.getElementById('money_taken').addEventListener('input', calculateMoneyReturned);
 
@@ -109,7 +131,7 @@
         const totalPrice = parseFloat(document.getElementById('total_price').value) || 0;
         const moneyTaken = parseFloat(document.getElementById('money_taken').value) || 0;
         const moneyReturned = moneyTaken - totalPrice;
-        
+
         document.getElementById('money_returned').value = moneyReturned >= 0 ? moneyReturned : 0;
     }
 </script>

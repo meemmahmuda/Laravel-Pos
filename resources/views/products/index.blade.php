@@ -33,7 +33,8 @@
             </thead>
             <tbody>
                 @foreach ($products as $product)
-                    <tr>
+                    <!-- Check if the stock is 10 or less, if so apply the 'table-danger' class -->
+                    <tr class="{{ $product->stock <= 10 ? 'table-danger' : '' }}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->code }}</td>

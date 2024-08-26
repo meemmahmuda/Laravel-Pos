@@ -46,7 +46,7 @@
                 </tbody>
             </table>
             <p class="total">Total Price: {{ $sale->total_price }}</p>
-            <p class="total">Discount: {{ $sale->discount }}</p>
+            <p class="total">Discount: {{ $sale->discount }}%</p>
             <p class="total">Amount Paid: {{ $sale->money_taken }}</p>
             <p class="total">Amount Returned: {{ $sale->money_returned }}</p>
         </div>
