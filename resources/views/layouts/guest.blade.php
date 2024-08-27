@@ -22,6 +22,11 @@
                 </a>
             </div>
 
+            <h1 style="font-family: Arial, sans-serif; font-size: 32px; color: #3742fa; text-align: center; margin-top: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                POS System
+            </h1>
+
+
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
