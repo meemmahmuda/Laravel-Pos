@@ -77,9 +77,9 @@ public function printInvoice(Purchase $purchase)
         $changeReturned = $request->amount_given - $totalPrice;
 
         // Update product stock
-        $product = Product::findOrFail($order->product_id);
-        $product->stock += $request->quantity;
-        $product->save();
+        // $product = Product::findOrFail($order->product_id);
+        // $product->stock += $request->quantity;
+        // $product->save();
 
         $purchase->update([
             'order_id' => $order->id,

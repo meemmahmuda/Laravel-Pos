@@ -99,31 +99,37 @@ class SaleController extends Controller
     public function update(Request $request, Sale $sale)
     {
         $product = Product::find($request->product_id);
-
-        if ($product->stock <= 0) {
-            return redirect()->back()->withErrors(['product_id' => 'The selected product is out of stock.']);
+    
+        // Adjust stock only if the quantity has changed
+        $oldQuantity = $sale->quantity;
+        $newQuantity = $request->quantity;
+    
+        if ($newQuantity != $oldQuantity) {
+            // Revert the previous quantity from the stock
+            $product->increment('stock', $oldQuantity);
+    
+            // Deduct the new quantity from the stock
+            if ($newQuantity > $product->stock) {
+                return redirect()->back()->withErrors(['quantity' => 'The quantity cannot be greater than the available stock.']);
+            }
+            $product->decrement('stock', $newQuantity);
         }
-
-        if ($request->quantity > $product->stock) {
-            return redirect()->back()->withErrors(['quantity' => 'The quantity cannot be greater than the available stock.']);
-        }
-        
+    
         $sellingPrice = $product->selling_price;
-        $quantity = $request->quantity;
         $discountPercentage = $request->discount;
     
         // Calculate the subtotal
-        $subtotal = $sellingPrice * $quantity;
-        
+        $subtotal = $sellingPrice * $newQuantity;
+    
         // Calculate the discount amount
         $discountAmount = ($discountPercentage / 100) * $subtotal;
-        
+    
         // Calculate the total price after discount
         $totalPrice = $subtotal - $discountAmount;
         if ($totalPrice < 0) {
             $totalPrice = 0;
         }
-        
+    
         // Calculate money returned
         $moneyTaken = $request->money_taken;
         $moneyReturned = $moneyTaken - $totalPrice;
@@ -137,21 +143,17 @@ class SaleController extends Controller
             'address' => $request->address,
             'phone_no' => $request->phone_no,
             'product_id' => $request->product_id,
-            'quantity' => $quantity,
-            'selling_price' => $sellingPrice, 
+            'quantity' => $newQuantity,
+            'selling_price' => $sellingPrice,
             'total_price' => $totalPrice,
-            'discount' => $discountPercentage, 
+            'discount' => $discountPercentage,
             'money_taken' => $moneyTaken,
             'money_returned' => $moneyReturned,
         ]);
     
-        // Update the product stock
-        $product->update([
-            'stock' => $product->stock - $request->quantity,
-        ]);
-    
-        return redirect()->route('sales.index')->with('success', 'Sale updated successfully!');
+        return redirect()->route('sales.index')->with('success', 'Sale updated successfully.');
     }
+    
     
 
     public function destroy(Sale $sale)

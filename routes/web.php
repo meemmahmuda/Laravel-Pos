@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\IncomeStatementController;
+use App\Http\Controllers\SalesReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('purchases/{purchase}/invoice', [PurchaseController::class, 'printInvoice'])->name('purchases.invoice');
     Route::get('sales/{sale}/invoice', [SaleController::class, 'printInvoice'])->name('sales.invoice');
     Route::get('/income-statement', [IncomeStatementController::class, 'index'])->name('income_statement.index');
+    Route::resource('sales_returns', SalesReturnController::class);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

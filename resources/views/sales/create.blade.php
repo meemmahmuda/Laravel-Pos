@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="phone_no">Phone No</label>
-            <input type="text" id="phone_no" name="phone_no" class="form-control" required>
+            <input type="number" id="phone_no" name="phone_no" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="product_id">Product</label>

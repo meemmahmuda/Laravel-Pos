@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" name="phone" class="form-control" required>
+                <input type="number" name="phone" class="form-control" required>
             </div>
 
             <button type="submit" class="btn btn-success">Add Supplier</button>

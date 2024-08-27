@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('product_id');
             $table->integer('quantity');
             $table->decimal('selling_price', 10, 2);
-            $table->decimal('discount', 10, 2)->default(0);
+            $table->decimal('discount', 10, 2)->default(0)->nullable();
             $table->decimal('total_price', 10, 2);
             $table->decimal('money_taken', 10, 2);
             $table->decimal('money_returned', 10, 2);

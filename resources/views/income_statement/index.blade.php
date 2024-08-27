@@ -27,6 +27,12 @@
                 </tr>
             @endforelse
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">Total Profit/Loss</th>
+                <th>{{ number_format($totalProfitOrLoss, 2) }}</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 @endsection
