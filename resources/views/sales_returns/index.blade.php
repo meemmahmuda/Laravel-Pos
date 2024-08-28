@@ -1,9 +1,9 @@
 @extends('layouts.master')
+@section('title', 'Sales Return List')
 
 @section('content')
 
 <div class="container">
-<h1>Sales Returns</h1>
     <a href="{{ route('sales_returns.create') }}" class="btn btn-primary">Add Sales Return</a>
     <table class="table">
         <thead>

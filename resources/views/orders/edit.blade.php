@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Order</h1>
     <form action="{{ route('orders.update', $order->id) }}" method="POST">
         @csrf
         @method('PUT')

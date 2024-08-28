@@ -1,9 +1,9 @@
 @extends('layouts.master')
+@section('title', 'Sales Return Create')
 
 @section('content')
 
 <div class="container">
-    <h1>Create Sales Return</h1>
 
     <form action="{{ route('sales_returns.store') }}" method="POST">
         @csrf

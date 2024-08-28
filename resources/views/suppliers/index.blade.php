@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="container">
-        <h1>Supplier List</h1>
         <a href="{{ route('suppliers.create') }}" class="btn btn-primary">Add New Supplier</a>
         <table class="table table-bordered mt-3">
             <thead>

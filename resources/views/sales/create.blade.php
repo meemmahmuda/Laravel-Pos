@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container">
-    <h1>Create Sale</h1>
     <form action="{{ route('sales.store') }}" method="POST">
         @csrf
         <div class="form-group">

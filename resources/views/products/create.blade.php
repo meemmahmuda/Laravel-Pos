@@ -1,8 +1,8 @@
 @extends('layouts.master')
+@section('title', 'Create Products List')
 
 @section('content')
     <div class="container">
-        <h1>Add New Product</h1>
         <form action="{{ route('products.store') }}" method="POST">
             @csrf
             <div class="form-group">

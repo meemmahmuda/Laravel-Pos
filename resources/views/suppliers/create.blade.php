@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="container">
-        <h1>Add New Supplier</h1>
 
         <form action="{{ route('suppliers.store') }}" method="POST">
             @csrf

@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container">
-    <h1>Sales List</h1>
     <a href="{{ route('sales.create') }}" class="btn btn-primary">Add New Sale</a>
     <table class="table table-bordered mt-3">
         <thead>
@@ -17,7 +16,7 @@
                 <th>Quantity</th>
                 <th>Discount</th>
                 <th>Total Price</th>
-                <th style='width: 30%;'>Action</th>
+                <th style='width: 40%;'>Action</th>
             </tr>
         </thead>
         <tbody>

@@ -1,8 +1,8 @@
 @extends('layouts.master')
+@section('title', 'Income Statement')
 
 @section('content')
 <div class="container">
-    <h1>Income Statement</h1>
 
     <table class="table table-bordered">
         <thead>

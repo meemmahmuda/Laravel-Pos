@@ -4,13 +4,12 @@
 
 @section('content')
     <div class="container">
-        <h1>Category List</h1>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">Add New Category</a>
+        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
         <table class="table table-bordered mt-3">
-            <thead>
+            <thead> 
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th style="width: 60%;">Name</th>
                     <th>Action</th>
                 </tr>
             </thead>

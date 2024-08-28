@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
+@section('title', 'Products List')
+
 @section('content')
     <div class="container">
-        <h1>Product List</h1>
         <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
         
         @if(session('success'))
