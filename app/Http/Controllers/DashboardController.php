@@ -19,9 +19,9 @@ class DashboardController extends Controller
         $suppliers = Supplier::count();  
         $products = Product::count();  
         $orders = Order::count();  
-        $purchases = Purchase::count();  
-        $sales = Sale::count();  
-        $salesreturn = SalesReturn::count();  
+        $purchases = Purchase::sum('total_price');  
+        $sales = Sale::sum('total_price');  
+        $salesreturn = SalesReturn::sum('total_price');  
     
         return view('dashboard', compact('categories', 'suppliers', 'products', 'orders', 'purchases', 'sales', 'salesreturn'));
     }
