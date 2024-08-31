@@ -40,7 +40,7 @@ class IncomeStatementController extends Controller
                 'date' => $sale->date,
                 'purchase_amount' => $purchaseAmount,
                 'sales_amount' => $adjustedSalesAmount,
-                'profit_or_loss' => $profitOrLoss,
+                'profit_or_loss' => $,
             ];
         });
 
