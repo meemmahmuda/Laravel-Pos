@@ -12,7 +12,7 @@ class PurchaseController extends Controller
   
     public function index()
 {
-    $purchases = Purchase::with(['order.product', 'order.supplier'])->get();
+    $purchases = Purchase::with(['order.product', 'order.supplier'])->orderBy('created_at', 'desc')->get();
     return view('purchases.index', compact('purchases'));
 }
 

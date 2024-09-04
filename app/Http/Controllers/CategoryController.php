@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();  // Fetch all categories from the database
+        $categories = Category::orderBy('created_at', 'desc')->get(); 
         return view('categories.index', compact('categories'));
     }
     

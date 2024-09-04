@@ -11,7 +11,7 @@ class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::with('product')->get();
+        $sales = Sale::with('product')->orderBy('created_at', 'desc')->get();
         return view('sales.index', compact('sales'));
     }
 

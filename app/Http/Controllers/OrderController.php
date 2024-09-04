@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('product', 'supplier')->get();
+        $orders = Order::with('product', 'supplier')->orderBy('created_at', 'desc')->get();
         return view('orders.index', compact('orders'));
     }
 

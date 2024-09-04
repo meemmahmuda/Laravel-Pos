@@ -11,7 +11,7 @@ class SalesReturnController extends Controller
 {
     public function index()
     {
-        $salesReturns = SalesReturn::with('sale.product')->get();
+        $salesReturns = SalesReturn::with('sale.product')->orderBy('created_at', 'desc')->get();
         return view('sales_returns.index', compact('salesReturns'));
     }
 

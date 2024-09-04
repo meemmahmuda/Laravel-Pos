@@ -10,9 +10,8 @@ class IncomeStatementController extends Controller
 {
     public function index()
     {
-        // Get all sales, purchases, and sales returns, grouped by date
         $sales = Sale::selectRaw('DATE(created_at) as date, SUM(total_price) as total_sales')
-            ->groupBy('date')
+            ->groupBy('date')->orderBy('created_at', 'desc')
             ->get();
 
         $purchases = Purchase::selectRaw('DATE(created_at) as date, SUM(total_price) as total_purchases')
