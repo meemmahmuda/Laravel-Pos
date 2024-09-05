@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Sales Report')
+@section('title', 'Purchase Report')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
     <!-- Container for forms with flexbox layout -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <!-- Form for selecting date -->
-        <form action="{{ route('sales.report') }}" method="GET" style="margin-right: 20px;">
+        <form action="{{ route('purchases.report') }}" method="GET" style="margin-right: 20px;">
             <div class="form-group">
                 <label for="date">Select Date:</label>
                 <input type="date" id="date" name="date" value="{{ $selectedDate }}" class="form-control" style="width: 200px;">
@@ -16,7 +16,7 @@
         </form>
 
         <!-- Form for selecting month -->
-        <form action="{{ route('sales.report') }}" method="GET">
+        <form action="{{ route('purchases.report') }}" method="GET">
             <div class="form-group">
                 <label for="month">Select Month:</label>
                 <select id="month" name="month" class="form-control" style="width: 150px;">
@@ -39,29 +39,25 @@
             <tr>
                 <th>Category</th>
                 <th>Product Name</th>
-                <th>Units Sold</th>
+                <th>Units Purchased</th>
                 <th>Unit Price</th>
-                <th>Discount</th>
-                <th>Total Sales</th>
-                <th>Net Sales</th>
+                <th>Total Purchase</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($reportData as $data)
                 <tr>
-                    <td>{{ $data['category'] }}</td>
+                    <td>{{ $data['category'] ?? 'N/A' }}</td>
                     <td>{{ $data['product_name'] }}</td>
-                    <td>{{ $data['units_sold'] }}</td>
-                    <td>TK {{ $data['unit_price'] }}</td>
-                    <td>TK {{ $data['discount'] }}</td>
-                    <td>TK {{ $data['total_sales'] }}</td>
-                    <td>TK {{ $data['net_sales'] }}</td>
+                    <td>{{ $data['quantity'] }}</td>
+                    <td>TK {{ $data['purchase_price'] }}</td>
+                    <td>TK {{ $data['total_price'] }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     @else
-    <p class="mt-4">No sales data available for the selected date or month.</p>
+    <p class="mt-4">No purchase data available for the selected date or month.</p>
     @endif
 </div>
 @endsection

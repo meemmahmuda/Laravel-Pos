@@ -37,12 +37,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('suppliers', SupplierController::class);
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('purchases', PurchaseController::class);
     Route::get('purchases/{purchase}/invoice', [PurchaseController::class, 'printInvoice'])->name('purchases.invoice');
     Route::get('sales/{sale}/invoice', [SaleController::class, 'printInvoice'])->name('sales.invoice');
     Route::get('/income-statement', [IncomeStatementController::class, 'index'])->name('income_statement.index');
     Route::resource('sales_returns', SalesReturnController::class);
     Route::get('sales/report', [SaleController::class, 'report'])->name('sales.report');
+    Route::get('/purchases/report', [PurchaseController::class, 'report'])->name('purchases.report');
+
+
+    Route::resource('purchases', PurchaseController::class);
 
     Route::resource('sales', SaleController::class);
 

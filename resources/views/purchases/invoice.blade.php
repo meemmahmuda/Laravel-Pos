@@ -21,6 +21,7 @@
         </div>
 
         <div class="details">
+            <p><strong>Date of Purchase:</strong> {{ $purchase->created_at->format('d-m-Y') }}</p>
             <p><strong>Supplier Name:</strong> {{ $purchase->order->supplier->name }}</p>
             <p><strong>Order:</strong> {{ 'Order No ' . $purchase->order->id }}</p>
             <p><strong>Product:</strong> {{ $purchase->order->product->name }}</p>

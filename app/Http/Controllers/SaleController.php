@@ -172,37 +172,74 @@ class SaleController extends Controller
         return $pdf->stream('invoice.pdf'); // or use ->download('invoice.pdf') to force download
     }
 
+  
     
-
-    public function report()
-    {
-        // Fetch sales data grouped by product categories
-        $salesReport = Sale::with('product.category')
-            ->get()
-            ->groupBy('product.category.name');
-
-        // Calculate totals for each category
-        $categoryReport = $salesReport->map(function($sales, $category) {
-            $totalUnits = $sales->sum('quantity');
-            $totalSales = $sales->sum('total_price');
-            $totalDiscounts = $sales->sum(function($sale) {
-                return ($sale->discount / 100) * ($sale->quantity * $sale->selling_price);
-            });
-            $netSales = $totalSales - $totalDiscounts;
-
-            return [
-                'category' => $category,
-                'total_units' => $totalUnits,
-                'total_sales' => $totalSales,
-                'total_discounts' => $totalDiscounts,
-                'net_sales' => $netSales,
-            ];
-        });
-
-        return view('sales.report', compact('categoryReport'));
+public function report(Request $request)
+{
+    // Get the date and month from the request
+    $date = $request->input('date');
+    $month = $request->input('month');
+    
+    // Initialize the query
+    $query = Sale::with('product.category');
+    
+    // Filter by date if provided
+    if ($date) {
+        // Ensure the date is in Y-m-d format
+        $query->whereDate('created_at', $date);
     }
-
-
+    // Filter by month if provided (ignore date)
+    elseif ($month) {
+        $year = now()->year;
+        $startDate = "$year-$month-01";
+        // Ensure the end date includes the last day of the month
+        $endDate = now()->year($year)->month($month)->endOfMonth()->format('Y-m-d');
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    } 
+    // If neither date nor month is provided, use today's date
+    else {
+        $date = now()->format('Y-m-d');
+        $query->whereDate('created_at', $date);
+    }
+    
+    // Fetch sales data and eager load relationships
+    $sales = $query->get();
+    
+    // Initialize array to store report data
+    $reportData = [];
+    
+    foreach ($sales as $sale) {
+        $category = $sale->product->category->name;
+        $productName = $sale->product->name;
+        $unitsSold = $sale->quantity;
+        $unitPrice = $sale->selling_price;
+        $discount = $sale->discount;
+        
+        // Calculate total sales and net sales
+        $subtotal = $unitPrice * $unitsSold;
+        $discountAmount = ($discount / 100) * $subtotal;
+        $totalSales = $subtotal;
+        $netSales = $subtotal - $discountAmount;
+    
+        // Add data to report array
+        $reportData[] = [
+            'category' => $category,
+            'product_name' => $productName,
+            'units_sold' => $unitsSold,
+            'unit_price' => number_format($unitPrice, 2),
+            'discount' => number_format($discountAmount, 2),
+            'total_sales' => number_format($totalSales, 2),
+            'net_sales' => number_format($netSales, 2),
+        ];
+    }
+    
+    // Pass data to the view
+    return view('sales.report', [
+        'reportData' => $reportData,
+        'selectedDate' => $date,
+        'selectedMonth' => $month
+    ]);
+}
 
 }
 

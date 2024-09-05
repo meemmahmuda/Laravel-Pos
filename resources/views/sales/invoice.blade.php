@@ -23,6 +23,7 @@
             <p><strong>Customer Name:</strong> {{ $sale->customer_name }}</p>
             <p><strong>Address:</strong> {{ $sale->address }}</p>
             <p><strong>Phone No:</strong> {{ $sale->phone_no }}</p>
+            <p><strong>Date of Sale:</strong> {{ $sale->created_at->format('d-m-Y') }}</p>
             <table>
                 <thead>
                     <tr>

@@ -44,6 +44,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('sales.report') }}" class="nav-link text-white">
+                        <i class="fa-regular fa-flag"></i> Sales Report
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('purchases.report') }}" class="nav-link text-white">
+                        <i class="fa-regular fa-flag"></i> Purchases Report
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('income_statement.index') }}" class="nav-link text-white">
                         <i class="fa fa-chart-line"></i> Income Statement
                     </a>
