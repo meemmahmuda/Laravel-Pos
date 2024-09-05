@@ -171,5 +171,38 @@ class SaleController extends Controller
 
         return $pdf->stream('invoice.pdf'); // or use ->download('invoice.pdf') to force download
     }
+
+    
+
+    public function report()
+    {
+        // Fetch sales data grouped by product categories
+        $salesReport = Sale::with('product.category')
+            ->get()
+            ->groupBy('product.category.name');
+
+        // Calculate totals for each category
+        $categoryReport = $salesReport->map(function($sales, $category) {
+            $totalUnits = $sales->sum('quantity');
+            $totalSales = $sales->sum('total_price');
+            $totalDiscounts = $sales->sum(function($sale) {
+                return ($sale->discount / 100) * ($sale->quantity * $sale->selling_price);
+            });
+            $netSales = $totalSales - $totalDiscounts;
+
+            return [
+                'category' => $category,
+                'total_units' => $totalUnits,
+                'total_sales' => $totalSales,
+                'total_discounts' => $totalDiscounts,
+                'net_sales' => $netSales,
+            ];
+        });
+
+        return view('sales.report', compact('categoryReport'));
+    }
+
+
+
 }
 

@@ -13,6 +13,7 @@
                 <th>Address</th>
                 <th>Customer Contact No.</th>
                 <th>Product</th>
+                <th>Category</th>
                 <th>Quantity</th>
                 <th>Discount</th>
                 <th>Total Price</th>
@@ -27,6 +28,7 @@
                     <td>{{ $sale->address }}</td>
                     <td>{{ $sale->phone_no }}</td>
                     <td>{{ $sale->product->name }}</td>
+                    <td>{{ $sale->product->category->name }}</td>
                     <td>{{ $sale->quantity }}</td>
                     <td>{{ $sale->discount }}%</td>
                     <td>{{ $sale->total_price }}</td>
