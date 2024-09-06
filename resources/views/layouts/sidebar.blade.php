@@ -1,4 +1,4 @@
-<div class="d-flex" style="height: 1100px;">
+<div class="d-flex h-100">
         <!-- Sidebar -->
     <div class="bg-dark text-white " style="width: 13rem;">
         <div class="p-3">

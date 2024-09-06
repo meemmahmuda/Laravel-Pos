@@ -24,19 +24,23 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'supplier_id' => 'required',
-            'category_id' => 'required',
-            'name' => 'required|string',
-            'code' => 'required|string|unique:products',
-            'purchase_price' => 'required|integer',
-            'selling_price' => 'required|integer',
-            'stock' => 'nullable|integer',
-        ]);
+        $products = $request->input('products', []);
+        
+        foreach ($products as $productData) {
+            $validatedData = \Validator::make($productData, [
+                'name' => 'required|string',
+                'code' => 'required|string|unique:products',
+                'supplier_id' => 'required',
+                'category_id' => 'required',
+                'purchase_price' => 'required|integer',
+                'selling_price' => 'required|integer',
+                'stock' => 'nullable|integer',
+            ])->validate();
 
-        Product::create($request->all());
+            Product::create($validatedData);
+        }
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('products.index')->with('success', 'Products created successfully.');
     }
 
     public function edit(Product $product)

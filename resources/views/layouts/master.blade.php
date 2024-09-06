@@ -12,7 +12,7 @@
     <style>
         .content {
             flex-grow: 1;
-            padding: 20px; /* Optional padding */
+            padding: 20px; 
         }
     </style>
 
