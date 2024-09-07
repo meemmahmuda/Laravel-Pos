@@ -11,6 +11,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\SalesReturnController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('sales_returns', SalesReturnController::class);
+    Route::resource('expenses', ExpenseController::class);
 
     Route::get('purchases/{purchase}/invoice', [PurchaseController::class, 'printInvoice'])->name('purchases.invoice');
     Route::get('sales/{sale}/invoice', [SaleController::class, 'printInvoice'])->name('sales.invoice');

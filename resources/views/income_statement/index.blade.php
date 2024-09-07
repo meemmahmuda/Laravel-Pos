@@ -1,8 +1,26 @@
 @extends('layouts.master')
+
 @section('title', 'Income Statement')
 
 @section('content')
 <div class="container">
+
+    <!-- Month selection form -->
+    <form action="{{ route('income_statement.index') }}" method="GET" class="mb-4">
+        <div class="form-group">
+            <label for="month">Select Month:</label>
+            <select style="width: 200px" name="month" id="month" class="form-control" onchange="this.form.submit()">
+                @for ($i = 0; $i < 12; $i++)
+                    @php
+                        $month = now()->subMonths($i)->format('Y-m');
+                    @endphp
+                    <option value="{{ $month }}" {{ $selectedMonth == $month ? 'selected' : '' }}>
+                        {{ \Carbon\Carbon::parse($month . '-01')->format('F Y') }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </form>
 
     <table class="table table-bordered">
         <thead>
@@ -23,7 +41,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">No transactions available.</td>
+                    <td colspan="4">No transactions available for the selected month.</td>
                 </tr>
             @endforelse
         </tbody>

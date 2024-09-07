@@ -19,6 +19,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('expenses.index') }}" class="nav-link text-white">
+                    <i class="fa-solid fa-right-to-bracket"></i> Expenses
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('products.index') }}" class="nav-link text-white">
                         <i class="fa fa-cube"></i> Products
                     </a>

@@ -1,24 +1,35 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\Purchase;
-use App\Models\SalesReturn; // Include the SalesReturn model
+use App\Models\SalesReturn;
 use Illuminate\Http\Request;
 
 class IncomeStatementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get the selected month from the request, default to the current month
+        $selectedMonth = $request->input('month', date('Y-m'));
+
+        // Filter sales by selected month
         $sales = Sale::selectRaw('DATE(created_at) as date, SUM(total_price) as total_sales')
-            ->groupBy('date')->orderBy('created_at', 'desc')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = ?', [$selectedMonth])
+            ->groupBy('date')
+            ->orderBy('created_at', 'desc')
             ->get();
 
+        // Filter purchases by selected month
         $purchases = Purchase::selectRaw('DATE(created_at) as date, SUM(total_price) as total_purchases')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = ?', [$selectedMonth])
             ->groupBy('date')
             ->get();
 
+        // Filter sales returns by selected month
         $salesReturns = SalesReturn::selectRaw('DATE(created_at) as date, SUM(total_price) as total_returns')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = ?', [$selectedMonth])
             ->groupBy('date')
             ->get();
 
@@ -46,6 +57,7 @@ class IncomeStatementController extends Controller
         // Calculate total profit or loss
         $totalProfitOrLoss = $incomeStatement->sum('profit_or_loss');
 
-        return view('income_statement.index', compact('incomeStatement', 'totalProfitOrLoss'));
+        // Pass the selected month and income statement to the view
+        return view('income_statement.index', compact('incomeStatement', 'totalProfitOrLoss', 'selectedMonth'));
     }
 }
