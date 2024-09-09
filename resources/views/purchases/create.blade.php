@@ -16,7 +16,7 @@
                         data-supplier="{{ $order->supplier->name }}" 
                         data-price="{{ $order->purchase_price }}" 
                         data-quantity="{{ $order->quantity }}">
-                        {{ 'Order No ' . $order->id }}
+                        {{ 'Order No ' . $order->id . ' - Product: ' . $order->product->name}}
                     </option>
                 @endforeach
             </select>

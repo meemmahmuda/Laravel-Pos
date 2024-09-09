@@ -5,9 +5,9 @@
 
 <div class="container">
     <a href="{{ route('sales_returns.create') }}" class="btn btn-primary">Add Sales Return</a>
-    <table class="table">
+    <table class="table table-bordered mt-3">
         <thead>
-            <tr>
+            <tr style="text-align: center;">
                 <th>Sale ID</th>
                 <th>Product Name</th>
                 <th>Quantity Returned</th>
@@ -18,11 +18,11 @@
         <tbody>
             @foreach ($salesReturns as $return)
                 <tr>
-                    <td>{{ $return->sale->id }}</td>
+                    <td style="text-align: center;">{{ $return->sale->id }}</td>
                     <td>{{ $return->sale->product->name }}</td>
-                    <td>{{ $return->quantity }}</td>
+                    <td style="text-align: center;">{{ $return->quantity }}</td>
                     <td>{{ $return->total_price }}</td>
-                    <td>
+                    <td style="text-align: center;">
                         <form action="{{ route('sales_returns.destroy', $return->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

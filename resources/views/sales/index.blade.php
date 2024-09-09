@@ -7,8 +7,8 @@
     <a href="{{ route('sales.create') }}" class="btn btn-primary">Add New Sale</a>
     <table class="table table-bordered mt-3">
         <thead>
-            <tr>
-                <th>#</th>
+            <tr style="text-align: center;">
+                <th>SL No.</th>
                 <th>Customer Name</th>
                 <th>Address</th>
                 <th>Customer Contact No.</th>
@@ -17,13 +17,13 @@
                 <th>Quantity</th>
                 <th>Discount</th>
                 <th>Total Price</th>
-                <th style='width: 40%;'>Action</th>
+                <th style='width: 30%'>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($sales as $sale)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td style="text-align: center;">{{ $loop->iteration }}</td>
                     <td>{{ $sale->customer_name }}</td>
                     <td>{{ $sale->address }}</td>
                     <td>{{ $sale->phone_no }}</td>
@@ -32,7 +32,7 @@
                     <td>{{ $sale->quantity }}</td>
                     <td>{{ $sale->discount }}%</td>
                     <td>{{ $sale->total_price }}</td>
-                    <td>
+                    <td style="text-align: center;">
                         <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" style="display:inline;">
                             @csrf
