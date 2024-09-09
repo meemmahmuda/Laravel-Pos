@@ -7,8 +7,8 @@
     <a href="{{ route('purchases.create') }}" class="btn btn-primary">Add New Purchase</a>
     <table class="table table-bordered mt-3">
         <thead>
-            <tr>
-                <th>#</th>
+            <tr style="text-align: center;">
+                <th>SL No.</th>
                 <th>Order No</th>
                 <th>Product Name</th>
                 <th>Supplier Name</th>
@@ -20,7 +20,7 @@
         <tbody>
             @foreach($purchases as $purchase)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td style="text-align: center;">{{ $loop->iteration }}</td>
                     <td>{{ 'Order No ' . $purchase->order->id }}</td>
                     <td>{{ $purchase->order->product->name }}</td>
                     <td>{{ $purchase->order->supplier->name }}</td>
