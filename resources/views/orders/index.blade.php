@@ -7,7 +7,7 @@
     <a href="{{ route('orders.create') }}" class="btn btn-primary">Add New Order</a>
     <table class="table table-bordered mt-3">
         <thead>
-            <tr>
+            <tr style="text-align: center;">
                 <th>SL No.</th>
                 <th>Product</th>
                 <th>Supplier</th>
@@ -20,13 +20,13 @@
         <tbody>
             @foreach($orders as $order)
                 <tr>
-                    <td>{{ 'Order No ' . $loop->iteration }}</td>
+                    <td style="text-align: center;">{{ 'Order No ' . $loop->iteration }}</td>
                     <td>{{ $order->product->name }}</td>
                     <td>{{ $order->supplier->name }}</td>
                     <td>{{ $order->quantity }}</td>
                     <td>{{ $order->purchase_price }}</td>
                     <td>{{ $order->total_price }}</td>
-                    <td>
+                    <td style="text-align: center;">
                         <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
                             @csrf

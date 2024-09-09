@@ -18,10 +18,10 @@
             </div>
         @endif
 
-        <table class="table">
+        <table class="table table-bordered mt-3">
             <thead>
-                <tr>
-                    <th>#</th>
+                <tr style="text-align: center;">
+                    <th>SL No.</th>
                     <th>Name</th>
                     <th>Code</th>
                     <th>Supplier</th>
@@ -36,7 +36,7 @@
                 @foreach ($products as $product)
                     <!-- Check if the stock is 10 or less, if so apply the 'table-danger' class -->
                     <tr class="{{ $product->stock <= 10 ? 'table-danger' : '' }}">
-                        <td>{{ $loop->iteration }}</td>
+                        <td style="text-align: center;">{{ $loop->iteration }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->code }}</td>
                         <td>{{ $product->supplier->name ?? 'N/A' }}</td>
@@ -44,7 +44,7 @@
                         <td>{{ $product->purchase_price }}</td>
                         <td>{{ $product->selling_price }}</td>
                         <td>{{ $product->stock ?? 'N/A' }}</td>
-                        <td>
+                        <td style="text-align: center;">
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
                                 @csrf

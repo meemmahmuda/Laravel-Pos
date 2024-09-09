@@ -1,56 +1,88 @@
 @extends('layouts.master')
-
 @section('title', 'Income Statement')
 
 @section('content')
 <div class="container">
 
     <!-- Month selection form -->
-    <form action="{{ route('income_statement.index') }}" method="GET" class="mb-4">
-        <div class="form-group">
-            <label for="month">Select Month:</label>
-            <select style="width: 200px" name="month" id="month" class="form-control" onchange="this.form.submit()">
-                @for ($i = 0; $i < 12; $i++)
-                    @php
-                        $month = now()->subMonths($i)->format('Y-m');
-                    @endphp
-                    <option value="{{ $month }}" {{ $selectedMonth == $month ? 'selected' : '' }}>
-                        {{ \Carbon\Carbon::parse($month . '-01')->format('F Y') }}
-                    </option>
-                @endfor
-            </select>
+    <form method="GET" action="{{ route('income_statement.index') }}" class="mb-4">
+        <div class="form-group row">
+            <label for="month" class="col-sm-2 col-form-label">Select Month:</label>
+            <div class="col-sm-4">
+                <input type="month" id="month" name="month" class="form-control" value="{{ $selectedMonth }}">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
         </div>
     </form>
 
+    <!-- Display the income statement in vertical format -->
     <table class="table table-bordered">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>Date</th>
-                <th>Purchase Amount (TK)</th>
-                <th>Sales Amount (TK)</th>
-                <th>Profit/Loss (TK)</th>
+                <th>Details</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($incomeStatement as $statement)
-                <tr>
-                    <td>{{ $statement['date'] }}</td>
-                    <td>{{ number_format($statement['purchase_amount'], 2) }}</td>
-                    <td>{{ number_format($statement['sales_amount'], 2) }}</td>
-                    <td>{{ number_format($statement['profit_or_loss'], 2) }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">No transactions available for the selected month.</td>
-                </tr>
-            @endforelse
-        </tbody>
-        <tfoot>
             <tr>
-                <th colspan="3">Total Profit/Loss</th>
-                <th>{{ number_format($totalProfitOrLoss, 2) }}</th>
+                <td>Gross Sales</td>
+                <td>TK {{ number_format($incomeStatement['gross_sales'], 2) }}</td>
             </tr>
-        </tfoot>
+            <tr>
+                <td>(-) Discounts</td>
+                <td>TK {{ number_format($incomeStatement['discount_amount'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(-) Sales Returns</td>
+                <td>TK {{ number_format($incomeStatement['sales_return_amount'], 2) }}</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td>Net Sales</td>
+                <td>TK {{ number_format($incomeStatement['net_sales'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(-) Purchases</td>
+                <td>TK {{ number_format($incomeStatement['purchase_amount'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>Cost of Goods Sold (COGS)</td>
+                <td>TK {{ number_format($incomeStatement['cogs'], 2) }}</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td>Gross Profit</td>
+                <td>TK {{ number_format($incomeStatement['gross_profit'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(-) Operating Expenses</td>
+                <td>TK {{ number_format($incomeStatement['operating_expenses'], 2) }}</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td>Operating Profit (EBIT)</td>
+                <td>TK {{ number_format($incomeStatement['operating_profit'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(+) Interest Income</td>
+                <td>TK {{ number_format($incomeStatement['interest_income'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(-) Interest Expense</td>
+                <td>TK {{ number_format($incomeStatement['interest_expense'], 2) }}</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td>Net Income Before Taxes (EBT)</td>
+                <td>TK {{ number_format($incomeStatement['net_income_before_taxes'], 2) }}</td>
+            </tr>
+            <tr>
+                <td>(-) Taxes (15%)</td>
+                <td>TK {{ number_format($incomeStatement['taxes'], 2) }}</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td>Net Income/Loss</td>
+                <td>TK {{ number_format($incomeStatement['net_income'], 2) }}</td>
+            </tr>
+        </tbody>
     </table>
 </div>
 @endsection

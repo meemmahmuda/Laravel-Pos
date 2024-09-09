@@ -10,7 +10,7 @@ class ExpenseController extends Controller
     public function index()
     {
         // Get all expenses
-        $expenses = Expense::all();
+        $expenses = Expense::orderBy('created_at', 'desc')->get();
         return view('expenses.index', compact('expenses'));
     }
 

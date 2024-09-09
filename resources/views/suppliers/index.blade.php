@@ -7,8 +7,8 @@
         <a href="{{ route('suppliers.create') }}" class="btn btn-primary">Add New Supplier</a>
         <table class="table table-bordered mt-3">
             <thead>
-                <tr>
-                    <th>#</th>
+                <tr style="text-align: center;">
+                    <th>SL No.</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Phone</th>
@@ -18,11 +18,11 @@
             <tbody>
                 @foreach($suppliers as $supplier)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td style="text-align: center;">{{ $loop->iteration }}</td>
                         <td>{{ $supplier->name }}</td>
                         <td>{{ $supplier->address }}</td>
                         <td>{{ $supplier->phone }}</td>
-                        <td>
+                        <td style="text-align: center;">
                             <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" style="display:inline;">
                                 @csrf

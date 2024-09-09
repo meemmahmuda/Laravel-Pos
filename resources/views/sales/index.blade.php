@@ -33,13 +33,13 @@
                     <td>{{ $sale->discount }}%</td>
                     <td>{{ $sale->total_price }}</td>
                     <td>
-                        <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                         </form>
-                        <a href="{{ route('sales.invoice', $sale->id) }}" target="_blank" class="btn btn-info">Print Invoice</a>
+                        <a href="{{ route('sales.invoice', $sale->id) }}" target="_blank" class="btn btn-info btn-sm">Print Invoice</a>
                     </td>
                 </tr>
             @endforeach
