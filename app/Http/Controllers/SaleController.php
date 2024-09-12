@@ -167,7 +167,7 @@ class SaleController extends Controller
         $sale = Sale::findOrFail($id);
 
         // Load your PDF view and pass the sale data
-        $pdf = PDF::loadView('sales.invoice', ['sale' => $sale]);
+        $pdf = ::loadView('sales.invoice', ['sale' => $sale]);
 
         return $pdf->stream('invoice.pdf'); // or use ->download('invoice.pdf') to force download
     }
