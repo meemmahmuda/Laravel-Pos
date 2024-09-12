@@ -37,24 +37,43 @@ class SalesReturnController extends Controller
         }
 
         // Calculate the total price for the returned items
-        $totalPrice = ($sale->selling_price * $quantityReturned) - ($sale->discount / 100 * $sale->selling_price * $quantityReturned);
+        $returnedSubtotal = $sale->selling_price * $quantityReturned;
+        $discountAmount = ($sale->discount / 100) * $returnedSubtotal;
+        $returnedTotalPrice = $returnedSubtotal - $discountAmount;
 
         // Create the sales return record
         SalesReturn::create([
             'sale_id' => $sale->id,
             'quantity' => $quantityReturned,
-            'total_price' => $totalPrice,
+            'total_price' => $returnedTotalPrice,
         ]);
 
         // Update the product stock by adding the returned quantity
         $product->increment('stock', $quantityReturned);
+
+        // Deduct the returned amount from the sale's total price
+        $sale->total_price -= $returnedTotalPrice;
+        $sale->quantity -= $quantityReturned;
+        $sale->save();
 
         return redirect()->route('sales_returns.index')->with('success', 'Sales return processed successfully!');
     }
 
     public function destroy(SalesReturn $salesReturn)
     {
+        $sale = $salesReturn->sale;
+
+        // Revert the total price in the sale
+        $sale->total_price += $salesReturn->total_price;
+        $sale->quantity += $salesReturn->quantity;
+        $sale->save();
+
+        // Restore the stock
+        $salesReturn->sale->product->decrement('stock', $salesReturn->quantity);
+
+        // Delete the sales return record
         $salesReturn->delete();
+
         return redirect()->route('sales_returns.index')->with('success', 'Sales return deleted successfully.');
     }
 }
