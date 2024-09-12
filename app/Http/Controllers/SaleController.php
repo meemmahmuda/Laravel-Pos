@@ -237,7 +237,7 @@ public function report(Request $request)
     return view('sales.report', [
         'reportData' => $reportData,
         'selectedDate' => $date,
-        'selectedMonth' => $
+        'selectedMonth' => $month
     ]);
 }
 
